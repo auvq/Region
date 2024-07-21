@@ -1,0 +1,4 @@
+mongo:
+  uri: "mongodb+srv://auvqbutcooler:JhffiZTRqJFJtd0C@spigot.cl28lvl.mongodb.net/?retryWrites=true&w=majority&appName=spigot"
+  hostname: "regions"
+  collection: "users"

@@ -1,0 +1,10 @@
+name: Region
+version: '1.0-SNAPSHOT'
+main: me.auvq.region.Main
+api-version: '1.20'
+commands:
+    region:
+      description: Region command
+      usage: /region
+      permission: region.command
+      aliases: [rg]
