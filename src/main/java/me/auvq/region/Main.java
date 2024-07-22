@@ -3,12 +3,9 @@ package me.auvq.region;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.bukkit.LiteCommandsBukkit;
 import lombok.Getter;
-import me.auvq.region.commands.MainCommand;
-import me.auvq.region.commands.args.FlagState;
-import me.auvq.region.commands.args.FlagType;
+import me.auvq.region.commands.RegionCommand;
+import me.auvq.region.commands.RegionTabCompleter;
 import me.auvq.region.flag.Flag;
 import me.auvq.region.flag.FlagManager;
 import me.auvq.region.flag.flags.BlockBreakFlag;
@@ -35,17 +32,9 @@ public final class Main extends SimplePlugin {
 
     private MongoCollection<Document> collection;
 
-    private LiteCommands<CommandSender> liteCommands;
-
     @Override
     public void onPluginStart() {
         instance = (Main) SimplePlugin.getInstance();
-
-        liteCommands = LiteCommandsBukkit.builder()
-                .commands(new MainCommand())
-                .argument(Flag.State.class, new FlagState())
-                .argument(FlagManager.FlagType.class, new FlagType())
-                .build();
 
         try {
             mongoClient = MongoClients.create(Objects.requireNonNull(getConfig().getString("mongo.uri")));
@@ -62,6 +51,9 @@ public final class Main extends SimplePlugin {
 
         getServer().getPluginManager().registerEvents(new WandListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
+
+        this.getCommand("regions").setExecutor(new RegionCommand());
+        this.getCommand("region").setTabCompleter(new RegionTabCompleter());
 
         getServer().getConsoleSender().sendMessage(CC.color("&aMongoDB successfully setup!"));
 
