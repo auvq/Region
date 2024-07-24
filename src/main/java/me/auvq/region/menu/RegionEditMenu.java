@@ -1,5 +1,9 @@
 package me.auvq.region.menu;
 
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
+import com.github.stefvanschie.inventoryframework.pane.PatternPane;
+import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import me.auvq.region.listeners.ChatListener;
 import me.auvq.region.listeners.WandListener;
 import me.auvq.region.region.Region;
@@ -9,141 +13,126 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.menu.Menu;
-import org.mineacademy.fo.menu.button.Button;
-import org.mineacademy.fo.menu.button.annotation.Position;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegionEditMenu extends Menu {
-
-    @Position(9 * 3 - 8)
-    private Button rename;
-
-    @Position(9 * 3 - 6)
-    private Button addPlayer;
-
-    @Position(9 * 3 - 4)
-    private Button removePlayer;
-
-    @Position(9 * 3 - 2)
-    private Button redefineLocation;
-
-    @Position(9 * 5 - 5)
-    private Button editFlags; // OPENS A GUI WITH ALL FLAGS, TO EDIT THEM (SWITCH THEIR STATE, ENABLE/DISABLE)
+public class RegionEditMenu extends ChestGui {
 
 
+    private Region region;
 
-    public RegionEditMenu(Region region){
-        setTitle("&eEditing " + region.getName());
+    public RegionEditMenu(Region region) {
+        super(6, CC.color("&eEditing " + region.getName()));
 
-        setSize(9 * 6);
+        this.region = region;
+        this.setOnGlobalClick(event -> event.setCancelled(true));
+        fillItems();
+    }
 
-        rename = new Button() {
-            @Override
-            public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
-                player.sendMessage(CC.color("&eType the new name in chat!"));
+    private void fillItems() {
+        final Pattern pattern = new Pattern(
+                "000000000",
+                "000000000",
+                "010203040",
+                "000000000",
+                "000050000",
+                "000000000"
+        );
 
-                player.getOpenInventory().close();
+        final PatternPane patternPane = new PatternPane(
+                9,
+                6, pattern
+        );
 
-                ChatListener.renameMode.put(player.getUniqueId(), region);
-            }
+        patternPane.bindItem('0', new GuiItem(
+                        new ItemStack(Material.BLACK_STAINED_GLASS_PANE),
+                        event -> event.setCancelled(true)
+                )
+        );
 
-            @Override
-            public ItemStack getItem() {
-                return ItemBuilder.from(Material.NAME_TAG)
-                        .name("&eRename")
-                        .lore(
-                                "",
-                                "&7Click to rename the region"
-                        )
-                        .build();
-            }
-        };
+        patternPane.bindItem('1', new GuiItem(
+                        ItemBuilder.from(Material.NAME_TAG)
+                                .name("&eRename")
+                                .lore(
+                                        "",
+                                        "&7Click to rename the region"
+                                )
+                                .build(),
+                        event -> {
+                            event.getWhoClicked().sendMessage(CC.color("&eType the new name in chat!"));
 
-        addPlayer = new Button() {
-            @Override
-            public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
-                player.sendMessage(CC.color("&eType the player's name in chat!"));
+                            event.getWhoClicked().getOpenInventory().close();
 
-                player.getOpenInventory().close();
+                            ChatListener.renameMode.put(event.getWhoClicked().getUniqueId(), region);
+                        })
+                );
 
-                ChatListener.addPlayerMode.put(player.getUniqueId(), region);
-            }
+        patternPane.bindItem('2', new GuiItem(
+                        ItemBuilder.from(Material.EMERALD)
+                                .name("&aAdd Player")
+                                .lore(
+                                        "",
+                                        "&7Click to add a player to the region's whitelist"
+                                )
+                                .build(),
+                        event -> {
+                            event.getWhoClicked().sendMessage(CC.color("&eType the player's name in chat!"));
 
-            @Override
-            public ItemStack getItem() {
-                return ItemBuilder.from(Material.EMERALD)
-                        .name("&aAdd Player")
-                        .lore(
-                                "",
-                                "&7Click to add a player to the region's whitelist"
-                        )
-                        .build();
-            }
-        };
+                            event.getWhoClicked().getOpenInventory().close();
 
-        removePlayer = new Button() {
-            @Override
-            public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
-                player.sendMessage(CC.color("&eType the player's name in chat!"));
+                            ChatListener.addPlayerMode.put(event.getWhoClicked().getUniqueId(), region);
+                        })
+                );
 
-                player.getOpenInventory().close();
+        patternPane.bindItem('3', new GuiItem(
+                        ItemBuilder.from(Material.REDSTONE)
+                                .name("&cRemove Player")
+                                .lore(
+                                        "",
+                                        "&7Click to remove a player from the region's whitelist"
+                                )
+                                .build(),
+                        event -> {
+                            event.getWhoClicked().sendMessage(CC.color("&eType the player's name in chat!"));
 
-                ChatListener.removePlayerMode.put(player.getUniqueId(), region);
-            }
+                            event.getWhoClicked().getOpenInventory().close();
 
-            @Override
-            public ItemStack getItem() {
-                return ItemBuilder.from(Material.REDSTONE)
-                        .name("&cRemove Player")
-                        .lore(
-                                "",
-                                "&7Click to remove a player from the region's whitelist"
-                        )
-                        .build();
-            }
-        };
+                            ChatListener.removePlayerMode.put(event.getWhoClicked().getUniqueId(), region);
+                        })
+                );
 
-        redefineLocation = new Button() {
-            @Override
-            public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
-                player.sendMessage(CC.color("&eRight click to redefine the region's location!"));
+        patternPane.bindItem('4', new GuiItem(
+                        ItemBuilder.from(Material.GRASS_BLOCK)
+                                .name("&aRedefine Location")
+                                .lore(
+                                        "",
+                                        "&7Click to redefine the region's location"
+                                )
+                                .build(),
+                        event -> {
+                            event.getWhoClicked().sendMessage(CC.color("&eRight click to redefine the region's location!"));
 
-                player.getOpenInventory().close();
+                            event.getWhoClicked().getOpenInventory().close();
 
-                WandListener.toggleEditMode(player, region);
-            }
+                            WandListener.toggleEditMode((Player) event.getWhoClicked(), region);
+                        })
+                );
 
-            @Override
-            public ItemStack getItem() {
-                return ItemBuilder.from(Material.GRASS_BLOCK)
-                        .name("&aRedefine Location")
-                        .lore(
-                                "",
-                                "&7Click to redefine the region's location"
-                        )
-                        .build();
-            }
-        };
-
-        editFlags = new Button() {
-            @Override
-            public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
-                new FlagsMenu(region).displayTo(player);
-            }
-
-            @Override
-            public ItemStack getItem() {
-                return ItemBuilder.from(Material.WHITE_BANNER)
+        patternPane.bindItem('5', new GuiItem(
+                ItemBuilder.from(Material.WHITE_BANNER)
                         .name("&fEdit Flags")
                         .lore(
                                 "",
                                 "&7Click to edit the region's flags"
                         )
-                        .build();
-            }
-        };
+                        .build(),
+                event -> {
+                    new FlagsMenu(region).show(event.getWhoClicked());
+                })
+        );
+
+
+        this.addPane(patternPane);
     }
 }

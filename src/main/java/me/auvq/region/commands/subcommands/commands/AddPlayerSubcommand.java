@@ -25,7 +25,7 @@ public class AddPlayerSubcommand implements SubCommand {
             sender.sendMessage(CC.color("&cPlayer not found! Make sure the player is online!"));
             return true;
         }
-        Region region = RegionsManager.getRegion(args[0]);
+        Region region = plugin.getRegionsManager().getRegion(args[0]);
         if(region == null) {
             sender.sendMessage(CC.color("&cRegion not found!"));
             return true;

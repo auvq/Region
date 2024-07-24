@@ -18,12 +18,12 @@ import me.auvq.region.region.RegionsManager;
 import me.auvq.region.utils.CC;
 import org.bson.Document;
 import org.bukkit.command.CommandSender;
-import org.mineacademy.fo.plugin.SimplePlugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
 @Getter
-public final class Main extends SimplePlugin {
+public final class Main extends JavaPlugin {
 
     @Getter
     private static Main instance;
@@ -32,9 +32,13 @@ public final class Main extends SimplePlugin {
 
     private MongoCollection<Document> collection;
 
+    private FlagManager flagManager;
+
+    private RegionsManager regionsManager;
+
     @Override
-    public void onPluginStart() {
-        instance = (Main) SimplePlugin.getInstance();
+    public void onEnable() {
+        instance = this;
 
         try {
             mongoClient = MongoClients.create(Objects.requireNonNull(getConfig().getString("mongo.uri")));
@@ -42,6 +46,7 @@ public final class Main extends SimplePlugin {
             collection = mongoClient
                     .getDatabase(Objects.requireNonNull(getConfig().getString("mongo.hostname")))
                     .getCollection(Objects.requireNonNull(getConfig().getString("mongo.collection")));
+
         } catch (Exception e) {
             getServer().getConsoleSender().sendMessage(CC.color("&cFailed to setup MongoDB!"));
             e.printStackTrace();
@@ -52,29 +57,30 @@ public final class Main extends SimplePlugin {
         getServer().getPluginManager().registerEvents(new WandListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
-        this.getCommand("regions").setExecutor(new RegionCommand());
-        this.getCommand("region").setTabCompleter(new RegionTabCompleter());
-
         getServer().getConsoleSender().sendMessage(CC.color("&aMongoDB successfully setup!"));
+
+        flagManager = new FlagManager();
+        regionsManager = new RegionsManager();
 
         addFlags();
 
-        RegionsManager.loadRegions();
-
-        RegionsManager.getRegions().forEach(region -> {
+        regionsManager.getRegions().forEach(region -> {
             region.getFlags().forEach(flag -> getServer().getPluginManager().registerEvents(flag, this));
         });
+
+        this.getCommand("regions").setExecutor(new RegionCommand());
+        this.getCommand("regions").setTabCompleter(new RegionTabCompleter());
     }
 
     @Override
-    public void onPluginStop() {
+    public void onDisable() {
         // Plugin shutdown logic
     }
 
     public void addFlags() {
-        FlagManager.registerFlagCreator(BlockBreakFlag.type, () -> new BlockBreakFlag(Flag.State.WHITELIST));
-        FlagManager.registerFlagCreator(BlockPlaceFlag.type, () -> new BlockPlaceFlag(Flag.State.WHITELIST));
-        FlagManager.registerFlagCreator(EntityDamageFlag.type, () -> new EntityDamageFlag(Flag.State.WHITELIST));
-        FlagManager.registerFlagCreator(InteractFlag.type, () -> new InteractFlag(Flag.State.WHITELIST));
+        flagManager.registerFlagCreator(BlockBreakFlag.type, () -> new BlockBreakFlag(Flag.State.WHITELIST));
+        flagManager.registerFlagCreator(BlockPlaceFlag.type, () -> new BlockPlaceFlag(Flag.State.WHITELIST));
+        flagManager.registerFlagCreator(EntityDamageFlag.type, () -> new EntityDamageFlag(Flag.State.WHITELIST));
+        flagManager.registerFlagCreator(InteractFlag.type, () -> new InteractFlag(Flag.State.WHITELIST));
     }
 }

@@ -18,22 +18,22 @@ public class FlagManager {
     }
 
     @Getter
-    private static final Map<FlagType, Supplier<Flag>> flagCreators = new EnumMap<>(FlagType.class);
+    private final Map<FlagType, Supplier<Flag>> flagCreators = new EnumMap<>(FlagType.class);
 
-    public static void registerFlagCreator(FlagType type, Supplier<Flag> creator) {
+    public void registerFlagCreator(FlagType type, Supplier<Flag> creator) {
         flagCreators.put(type, creator);
     }
 
-    public static Flag createFlagInstance(FlagType type) {
+    public Flag createFlagInstance(FlagType type) {
         Supplier<Flag> creator = getFlag(type);
         return creator != null ? creator.get() : null;
     }
 
-    private static Supplier<Flag> getFlag(FlagType type) {
+    private Supplier<Flag> getFlag(FlagType type) {
         return flagCreators.get(type);
     }
 
-    public static List<Flag> createAllFlagInstances() {
+    public List<Flag> createAllFlagInstances() {
         List<Flag> allFlags = new ArrayList<>();
         for (Supplier<Flag> creator : flagCreators.values()) {
             allFlags.add(creator.get());

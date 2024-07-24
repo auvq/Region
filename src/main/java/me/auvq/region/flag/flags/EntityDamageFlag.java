@@ -1,5 +1,6 @@
 package me.auvq.region.flag.flags;
 
+import me.auvq.region.Main;
 import me.auvq.region.flag.Flag;
 import me.auvq.region.flag.FlagManager;
 import me.auvq.region.region.RegionsManager;
@@ -19,13 +20,13 @@ public class EntityDamageFlag extends Flag implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        RegionsManager.getRegions().forEach(region -> {
+        Main.getInstance().getRegionsManager().getRegions().forEach(region -> {
             if(region.getCuboid().isIn(event.getEntity().getLocation())) {
                 region.getFlags().forEach(flag -> {
                     if(flag instanceof EntityDamageFlag) {
                         if(event.getDamager().hasPermission("region.bypass")) return;
 
-                        event.setCancelled(shouldCancel(RegionsManager.getRegion(event.getEntity().getLocation()), (Player) event.getDamager()));
+                        event.setCancelled(shouldCancel(Main.getInstance().getRegionsManager().getRegion(event.getEntity().getLocation()), (Player) event.getDamager()));
 
                         if(event.isCancelled()) {
                             event.getDamager().sendMessage("You cannot damage entities here!");

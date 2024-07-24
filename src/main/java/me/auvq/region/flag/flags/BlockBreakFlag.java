@@ -1,5 +1,6 @@
 package me.auvq.region.flag.flags;
 
+import me.auvq.region.Main;
 import me.auvq.region.flag.Flag;
 import me.auvq.region.flag.FlagManager;
 import me.auvq.region.region.RegionsManager;
@@ -19,14 +20,14 @@ public class BlockBreakFlag extends Flag implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event){
-        RegionsManager.getRegions().forEach(region -> {
+        Main.getInstance().getRegionsManager().getRegions().forEach(region -> {
             if(region.getCuboid().isIn(event.getBlock().getLocation())) {
                 region.getFlags().forEach(flag -> {
                     if (flag instanceof BlockBreakFlag) {
 
                         if(event.getPlayer().hasPermission("region.bypass")) return;
 
-                        event.setCancelled(shouldCancel(RegionsManager.getRegion(event.getBlock().getLocation()), event.getPlayer()));
+                        event.setCancelled(shouldCancel(Main.getInstance().getRegionsManager().getRegion(event.getBlock().getLocation()), event.getPlayer()));
 
                         if (event.isCancelled()) {
                             event.getPlayer().sendMessage(CC.color("&cYou cannot break blocks here!"));

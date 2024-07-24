@@ -27,7 +27,7 @@ public class CreateSubcommand implements SubCommand {
         Location secondLocation = player.getLocation().subtract(5, 0, 5);
         SpiderCuboid cuboid = new SpiderCuboid(SpiderLocation.from(firstLocation), SpiderLocation.from(secondLocation));
 
-        RegionsManager.addRegion(new Region(args[0], cuboid));
+        plugin.getRegionsManager().addRegion(new Region(args[0], cuboid));
 
         player.sendMessage(CC.color("&eCreated a new region called &6" + args[0]));
         return true;

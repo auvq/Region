@@ -1,6 +1,5 @@
 package me.auvq.region.listeners;
 
-import com.comphenix.protocol.PacketType;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.auvq.region.region.Region;
 import me.auvq.region.utils.CC;

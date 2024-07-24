@@ -40,7 +40,7 @@ public class RegionCommand implements CommandExecutor {
                 sender.sendMessage(CC.color("&cYou do not have permission to use this command."));
                 return true;
             }
-            new RegionsMenu().displayTo((Player) sender);
+            new RegionsMenu().show((Player) sender);
             return true;
         }
 

@@ -1,5 +1,6 @@
 package me.auvq.region.listeners;
 
+import me.auvq.region.Main;
 import me.auvq.region.region.Region;
 import me.auvq.region.region.RegionsManager;
 import me.auvq.region.utils.CC;
@@ -43,7 +44,7 @@ public class WandListener implements Listener {
                     SpiderLocation.from(firstLocation), SpiderLocation.from(secondLocation));
 
             if(region == null){
-                RegionsManager.addRegion(new Region(CC.color("&e" + player.getName() + "'s &6Region"), regionCuboid));
+                Main.getInstance().getRegionsManager().addRegion(new Region(CC.color("&e" + player.getName() + "'s &6Region"), regionCuboid));
             } else {
                 region.setCuboid(regionCuboid);
             }

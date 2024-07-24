@@ -1,5 +1,6 @@
 package me.auvq.region.commands;
 
+import me.auvq.region.Main;
 import me.auvq.region.region.RegionsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,7 +31,7 @@ public class RegionTabCompleter implements TabCompleter {
                 case "add":
                 case "remove":
                 case "whitelist":
-                    List<String> regionNames = RegionsManager.getRegions().stream()
+                    List<String> regionNames = Main.getInstance().getRegionsManager().getRegions().stream()
                             .map(region -> region.getName())
                             .collect(Collectors.toList());
                     StringUtil.copyPartialMatches(args[1], regionNames, completions);

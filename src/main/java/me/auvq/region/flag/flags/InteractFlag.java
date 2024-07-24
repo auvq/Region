@@ -1,6 +1,7 @@
 package me.auvq.region.flag.flags;
 
 import lombok.Getter;
+import me.auvq.region.Main;
 import me.auvq.region.flag.Flag;
 import me.auvq.region.flag.FlagManager;
 import me.auvq.region.region.RegionsManager;
@@ -24,13 +25,13 @@ public class InteractFlag extends Flag implements Listener {
             return;
         }
 
-        RegionsManager.getRegions().forEach(region -> {
+        Main.getInstance().getRegionsManager().getRegions().forEach(region -> {
             if(region.getCuboid().isIn(event.getClickedBlock().getLocation())) {
                 region.getFlags().forEach(flag -> {
                     if(flag instanceof InteractFlag) {
                         if(event.getPlayer().hasPermission("region.bypass")) return;
 
-                        event.setCancelled(shouldCancel(RegionsManager.getRegion(event.getClickedBlock().getLocation()), event.getPlayer()));
+                        event.setCancelled(shouldCancel(Main.getInstance().getRegionsManager().getRegion(event.getClickedBlock().getLocation()), event.getPlayer()));
 
                         if(event.isCancelled()) {
                             event.getPlayer().sendMessage(CC.color("&cYou cannot interact with blocks here!"));

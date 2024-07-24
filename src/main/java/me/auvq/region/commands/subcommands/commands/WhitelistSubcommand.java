@@ -21,7 +21,7 @@ public class WhitelistSubcommand implements SubCommand {
             return true;
         }
 
-        Region region = RegionsManager.getRegion(args[0]);
+        Region region = plugin.getRegionsManager().getRegion(args[0]);
         if (region == null) {
             sender.sendMessage(CC.color("&cRegion not found!"));
             return true;

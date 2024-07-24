@@ -34,7 +34,7 @@ public class Region {
 
         this.allowedPlayers = new ArrayList<>();
 
-        this.flags = FlagManager.createAllFlagInstances();
+        this.flags = Main.getInstance().getFlagManager().createAllFlagInstances();
 
         Main.getInstance().getCollection().insertOne(serialize());
     }
@@ -44,14 +44,18 @@ public class Region {
         this.cuboid = deserializeCuboid(doc.get("Cuboid", Document.class));
 
         this.allowedPlayers = doc.getList("allowedPlayers", String.class).stream().map(UUID::fromString).collect(Collectors.toList());
+
         this.flags = doc.getList("flags", String.class).stream().map(flagString -> {
             String[] parts = flagString.split(" - ");
             String flagName = parts[0];
             Flag.State flagState = Flag.State.valueOf(parts[1]);
-            Flag flag = FlagManager.createFlagInstance(FlagManager.FlagType.valueOf(flagName));
+
+            Flag flag = Main.getInstance().getFlagManager().createFlagInstance(FlagManager.FlagType.valueOf(flagName));
+
             if (flag != null) {
                 flag.setState(flagState);
             }
+
             return flag;
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }

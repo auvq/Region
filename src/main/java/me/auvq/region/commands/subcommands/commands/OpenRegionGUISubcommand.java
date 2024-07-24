@@ -22,14 +22,14 @@ public class OpenRegionGUISubcommand implements SubCommand {
         }
 
 
-        Region region = RegionsManager.getRegion(args[0]);
+        Region region = plugin.getRegionsManager().getRegion(args[0]);
 
         if(region == null) {
             sender.sendMessage(CC.color("&cRegion not found!"));
             return true;
         }
 
-        new RegionEditMenu(region).displayTo((Player) sender);
+        new RegionEditMenu(region).show((Player) sender);
         return true;
     }
 }
