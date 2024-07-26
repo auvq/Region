@@ -36,6 +36,10 @@ public final class Main extends JavaPlugin {
 
     private RegionsManager regionsManager;
 
+    WandListener wandListener;
+
+    ChatListener chatListener;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -54,8 +58,8 @@ public final class Main extends JavaPlugin {
             return;
         }
 
-        getServer().getPluginManager().registerEvents(new WandListener(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(wandListener = new WandListener(), this);
+        getServer().getPluginManager().registerEvents(chatListener = new ChatListener(), this);
 
         getServer().getConsoleSender().sendMessage(CC.color("&aMongoDB successfully setup!"));
 

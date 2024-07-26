@@ -17,7 +17,8 @@ public class WandSubcommand implements SubCommand {
         }
 
         Player player = (Player) sender;
-        WandListener.toggleEditMode(player);
+
+        plugin.getWandListener().toggleWand(player);
         return true;
     }
 }

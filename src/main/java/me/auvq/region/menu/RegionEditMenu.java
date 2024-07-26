@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PatternPane;
 import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
+import me.auvq.region.Main;
 import me.auvq.region.listeners.ChatListener;
 import me.auvq.region.listeners.WandListener;
 import me.auvq.region.region.Region;
@@ -64,7 +65,7 @@ public class RegionEditMenu extends ChestGui {
 
                             event.getWhoClicked().getOpenInventory().close();
 
-                            ChatListener.renameMode.put(event.getWhoClicked().getUniqueId(), region);
+                            Main.getInstance().getChatListener().renameMode.put(event.getWhoClicked().getUniqueId(), region);
                         })
                 );
 
@@ -81,7 +82,7 @@ public class RegionEditMenu extends ChestGui {
 
                             event.getWhoClicked().getOpenInventory().close();
 
-                            ChatListener.addPlayerMode.put(event.getWhoClicked().getUniqueId(), region);
+                            Main.getInstance().getChatListener().addPlayerMode.put(event.getWhoClicked().getUniqueId(), region);
                         })
                 );
 
@@ -98,7 +99,7 @@ public class RegionEditMenu extends ChestGui {
 
                             event.getWhoClicked().getOpenInventory().close();
 
-                            ChatListener.removePlayerMode.put(event.getWhoClicked().getUniqueId(), region);
+                            Main.getInstance().getChatListener().removePlayerMode.put(event.getWhoClicked().getUniqueId(), region);
                         })
                 );
 
@@ -115,7 +116,7 @@ public class RegionEditMenu extends ChestGui {
 
                             event.getWhoClicked().getOpenInventory().close();
 
-                            WandListener.toggleEditMode((Player) event.getWhoClicked(), region);
+                            Main.getInstance().getWandListener().toggleEditMode((Player) event.getWhoClicked(), region);
                         })
                 );
 

@@ -13,11 +13,11 @@ import java.util.*;
 
 public class ChatListener implements Listener {
 
-    public static Map<UUID, Region> renameMode = new HashMap<>();
+    public Map<UUID, Region> renameMode = new HashMap<>();
 
-    public static Map<UUID, Region> addPlayerMode = new HashMap<>();
+    public Map<UUID, Region> addPlayerMode = new HashMap<>();
 
-    public static Map<UUID, Region> removePlayerMode = new HashMap<>();
+    public Map<UUID, Region> removePlayerMode = new HashMap<>();
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {

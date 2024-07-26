@@ -21,7 +21,7 @@ import java.util.*;
 
 public class WandListener implements Listener {
 
-    public static List<UUID> editMode = new ArrayList<>();
+    public List<UUID> editMode = new ArrayList<>();
 
     private final HashMap<UUID, Location> firstClicks = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class WandListener implements Listener {
             Location firstLocation = firstClicks.remove(player.getUniqueId());
             Location secondLocation = event.getClickedBlock().getLocation();
 
-            toggleEditMode(player);
+            toggleWand(player);
 
             SpiderCuboid regionCuboid = new SpiderCuboid(
                     SpiderLocation.from(firstLocation), SpiderLocation.from(secondLocation));
@@ -70,7 +70,7 @@ public class WandListener implements Listener {
         event.setCancelled(true);
     }
 
-    public static void toggleEditMode(Player player) {
+    public void toggleWand(Player player) {
         ItemStack editWand = ItemBuilder.from(Material.BLAZE_ROD).name("&eRegion Wand").lore("", "&7Right click to select region").build();
         if(editMode.contains(player.getUniqueId())) {
             editMode.remove(player.getUniqueId());
@@ -84,7 +84,7 @@ public class WandListener implements Listener {
             player.sendMessage(CC.color("&eEdit mode &aenabled&e."));
         }
     }
-    public static void toggleEditMode(Player player, Region region) {
+    public void toggleEditMode(Player player, Region region) {
         WandListener.region = region;
         ItemStack editWand = ItemBuilder.from(Material.BLAZE_ROD).name("&eRegion Wand").lore("", "&7Right click to select region").build();
         if(editMode.contains(player.getUniqueId())) {

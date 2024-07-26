@@ -1,4 +1,3 @@
-me\auvq\region\menu\RegionEditMenu$5.class
 me\auvq\region\commands\RegionCommand.class
 me\auvq\region\utils\spider\SpiderCuboid.class
 me\auvq\region\flag\Flag.class
@@ -15,10 +14,8 @@ me\auvq\region\flag\flags\InteractFlag.class
 me\auvq\region\commands\subcommands\commands\OpenRegionGUISubcommand.class
 me\auvq\region\utils\spider\MergedBoolean.class
 me\auvq\region\listeners\WandListener.class
-me\auvq\region\menu\RegionEditMenu$3.class
 me\auvq\region\commands\subcommands\commands\WandSubcommand.class
 me\auvq\region\commands\subcommands\commands\WhitelistSubcommand.class
-me\auvq\region\menu\RegionEditMenu$4.class
 me\auvq\region\utils\Tasks.class
 me\auvq\region\listeners\ChatListener.class
 me\auvq\region\commands\subcommands\SubCommand.class
@@ -27,11 +24,9 @@ me\auvq\region\Main.class
 me\auvq\region\menu\FlagsMenu.class
 me\auvq\region\flag\FlagCreator.class
 me\auvq\region\utils\spider\SpiderLocation.class
-me\auvq\region\menu\RegionEditMenu$1.class
 me\auvq\region\flag\flags\EntityDamageFlag.class
 me\auvq\region\region\RegionsManager.class
 me\auvq\region\region\Region.class
-me\auvq\region\menu\RegionEditMenu$2.class
 me\auvq\region\commands\subcommands\commands\AddPlayerSubcommand.class
 me\auvq\region\flag\flags\BlockPlaceFlag.class
 me\auvq\region\flag\Flag$State.class
