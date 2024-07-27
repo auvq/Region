@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.auvq.region.Main;
 import me.auvq.region.flag.Flag;
 import me.auvq.region.flag.FlagManager;
+import me.auvq.region.utils.Tasks;
 import me.auvq.region.utils.spider.SpiderCuboid;
 import me.auvq.region.utils.spider.SpiderLocation;
 import org.bson.Document;
@@ -95,25 +96,29 @@ public class Region {
     }
 
     private void updateData(String oldName, String newName) {
-        Document query = new Document("RegionName", oldName);
-        Document update = new Document("$set", new Document("RegionName", newName));
+        Tasks.runAsync(() -> {
+            Document query = new Document("RegionName", oldName);
+            Document update = new Document("$set", new Document("RegionName", newName));
 
-        try {
-            Main.getInstance().getCollection().updateOne(query, update);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                Main.getInstance().getCollection().updateOne(query, update);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void updateData() {
-        Document serializedRegion = this.serialize();
-        Document query = new Document("RegionName", this.getName());
+        Tasks.runAsync(() -> {
+            Document serializedRegion = this.serialize();
+            Document query = new Document("RegionName", this.getName());
 
-        try {
-            Main.getInstance().getCollection().updateOne(query, new Document("$set", serializedRegion));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                Main.getInstance().getCollection().updateOne(query, new Document("$set", serializedRegion));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private final void addFlag(Flag flag) {

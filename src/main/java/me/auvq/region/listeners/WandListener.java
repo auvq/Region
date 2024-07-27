@@ -1,5 +1,6 @@
 package me.auvq.region.listeners;
 
+import lombok.Getter;
 import me.auvq.region.Main;
 import me.auvq.region.region.Region;
 import me.auvq.region.region.RegionsManager;
@@ -21,11 +22,13 @@ import java.util.*;
 
 public class WandListener implements Listener {
 
-    public List<UUID> editMode = new ArrayList<>();
+    @Getter
+    private List<UUID> editMode = new ArrayList<>();
 
     private final HashMap<UUID, Location> firstClicks = new HashMap<>();
 
-    private static Region region;
+    @Getter
+    private final Map<UUID, Region> playerEditingRegions = new HashMap<>();
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
@@ -43,10 +46,10 @@ public class WandListener implements Listener {
             SpiderCuboid regionCuboid = new SpiderCuboid(
                     SpiderLocation.from(firstLocation), SpiderLocation.from(secondLocation));
 
-            if(region == null){
+            if(getPlayerEditingRegions().get(player.getUniqueId()) == null){
                 Main.getInstance().getRegionsManager().addRegion(new Region(CC.color("&e" + player.getName() + "'s &6Region"), regionCuboid));
             } else {
-                region.setCuboid(regionCuboid);
+                getPlayerEditingRegions().get(player.getUniqueId()).setCuboid(regionCuboid);
             }
 
             player.sendMessage(CC.color("&eFinished setting up the region!"));
@@ -85,7 +88,7 @@ public class WandListener implements Listener {
         }
     }
     public void toggleEditMode(Player player, Region region) {
-        WandListener.region = region;
+        playerEditingRegions.put(player.getUniqueId(), region);
         ItemStack editWand = ItemBuilder.from(Material.BLAZE_ROD).name("&eRegion Wand").lore("", "&7Right click to select region").build();
         if(editMode.contains(player.getUniqueId())) {
             editMode.remove(player.getUniqueId());

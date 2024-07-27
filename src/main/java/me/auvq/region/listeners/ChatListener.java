@@ -1,6 +1,7 @@
 package me.auvq.region.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import lombok.Getter;
 import me.auvq.region.region.Region;
 import me.auvq.region.utils.CC;
 import org.bukkit.Bukkit;
@@ -11,13 +12,14 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.*;
 
+@Getter
 public class ChatListener implements Listener {
 
-    public Map<UUID, Region> renameMode = new HashMap<>();
+    private Map<UUID, Region> renameMode = new HashMap<>();
 
-    public Map<UUID, Region> addPlayerMode = new HashMap<>();
+    private Map<UUID, Region> addPlayerMode = new HashMap<>();
 
-    public Map<UUID, Region> removePlayerMode = new HashMap<>();
+    private Map<UUID, Region> removePlayerMode = new HashMap<>();
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {

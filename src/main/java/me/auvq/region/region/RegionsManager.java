@@ -11,8 +11,6 @@ public class RegionsManager {
 
     //I'm sorry for adding an s (Region(S)), I had some issue with the name RegionManager somewhy, so I had to change it..
 
-
-
     @Getter
     private final List<Region> regions = new ArrayList<>();
 
