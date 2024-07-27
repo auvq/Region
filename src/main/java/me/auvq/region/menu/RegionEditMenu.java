@@ -21,7 +21,7 @@ import java.util.Map;
 public class RegionEditMenu extends ChestGui {
 
 
-    private Region region;
+    private final Region region;
 
     public RegionEditMenu(Region region) {
         super(6, CC.color("&eEditing " + region.getName()));

@@ -164,20 +164,14 @@ public class SpiderLocation {
     public World getBukkitWorld() {
         final World world = Bukkit.getWorld(this.world);
 
-        if (world != null) {
-            return world;
-        }
-
-        return null;
+        return world;
     }
 
 
     @Override
     public boolean equals(@NotNull final Object object) {
-        if (!(object instanceof SpiderLocation))
+        if (!(object instanceof SpiderLocation location))
             return false;
-
-        final SpiderLocation location = (SpiderLocation) object;
 
         return location.x == this.x && location.y == this.y && location.z == this.z
                 && location.pitch == this.pitch && location.yaw == this.yaw;

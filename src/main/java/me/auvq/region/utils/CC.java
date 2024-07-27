@@ -36,7 +36,7 @@ public class CC {
 
 
     public static List<String> toColor(List<String> message) {
-        return (List<String>)message.stream().map(CC::color).collect(Collectors.toList());
+        return message.stream().map(CC::color).collect(Collectors.toList());
     }
 
     public static String color(String text, String name) {

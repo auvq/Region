@@ -15,11 +15,11 @@ import java.util.*;
 @Getter
 public class ChatListener implements Listener {
 
-    private Map<UUID, Region> renameMode = new HashMap<>();
+    private final Map<UUID, Region> renameMode = new HashMap<>();
 
-    private Map<UUID, Region> addPlayerMode = new HashMap<>();
+    private final Map<UUID, Region> addPlayerMode = new HashMap<>();
 
-    private Map<UUID, Region> removePlayerMode = new HashMap<>();
+    private final Map<UUID, Region> removePlayerMode = new HashMap<>();
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
@@ -60,7 +60,6 @@ public class ChatListener implements Listener {
             region.removePlayer(Bukkit.getPlayerUniqueId(event.getMessage()));
 
             player.sendMessage(CC.color("&eSuccessfully removed &6" + Bukkit.getPlayer(event.getMessage()) + " &efrom the region's whitelist"));
-            return;
         }
     }
 }

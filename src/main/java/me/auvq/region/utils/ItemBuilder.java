@@ -60,7 +60,7 @@ public class ItemBuilder {
         updateFunctional(meta -> {
             SkullMeta skullMeta = (SkullMeta)meta;
             skullMeta.setOwner(Bukkit.getOfflinePlayer(uuid).getName());
-            return (ItemMeta)skullMeta;
+            return skullMeta;
         });
         return this;
     }
@@ -70,7 +70,7 @@ public class ItemBuilder {
         updateFunctional(meta -> {
             SpawnEggMeta spawnEggMeta = (SpawnEggMeta)meta;
             spawnEggMeta.setCustomSpawnedType(type);
-            return (ItemMeta)spawnEggMeta;
+            return spawnEggMeta;
         });
         return this;
     }
@@ -187,7 +187,7 @@ public class ItemBuilder {
             if (item.getType().name().startsWith("LEATHER_")) {
                 LeatherArmorMeta armorMeta = (LeatherArmorMeta)item.getItemMeta();
                 armorMeta.setColor(color);
-                item.setItemMeta((ItemMeta)armorMeta);
+                item.setItemMeta(armorMeta);
             }
             return item;
         });

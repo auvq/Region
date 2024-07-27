@@ -40,9 +40,9 @@ public class RegionTabCompleter implements TabCompleter {
                     StringUtil.copyPartialMatches(args[1], FLAGS, completions);
                     break;
             }
-        } else if (args.length == 3 && "flag".equals(args[0].toLowerCase())) {
+        } else if (args.length == 3 && "flag".equalsIgnoreCase(args[0])) {
             StringUtil.copyPartialMatches(args[2], FLAG_VALUES, completions);
-        } else if (args.length == 3 && ("add".equals(args[0].toLowerCase()) || "remove".equals(args[0].toLowerCase()) || "whitelist".equals(args[0].toLowerCase()))) {
+        } else if (args.length == 3 && ("add".equalsIgnoreCase(args[0]) || "remove".equalsIgnoreCase(args[0]) || "whitelist".equalsIgnoreCase(args[0]))) {
             List<String> playerNames = Bukkit.getOnlinePlayers().stream()
                     .map(Player::getName)
                     .collect(Collectors.toList());

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RegionCommand implements CommandExecutor {
-    private Map<String, SubCommand> subCommands = new HashMap<>();
+    private final Map<String, SubCommand> subCommands = new HashMap<>();
 
     public RegionCommand() {
         // Initialize subcommands

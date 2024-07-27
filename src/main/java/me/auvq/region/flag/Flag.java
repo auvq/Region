@@ -30,7 +30,7 @@ public abstract class Flag implements Listener {
     protected String description;
 
     public Flag(FlagManager.FlagType type, State state, String description) {
-        this.type = type;
+        Flag.type = type;
         this.state = state;
         this.description = description;
 

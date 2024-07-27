@@ -3,14 +3,12 @@ package me.auvq.region.listeners;
 import lombok.Getter;
 import me.auvq.region.Main;
 import me.auvq.region.region.Region;
-import me.auvq.region.region.RegionsManager;
 import me.auvq.region.utils.CC;
 import me.auvq.region.utils.ItemBuilder;
 import me.auvq.region.utils.spider.SpiderCuboid;
 import me.auvq.region.utils.spider.SpiderLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +21,7 @@ import java.util.*;
 public class WandListener implements Listener {
 
     @Getter
-    private List<UUID> editMode = new ArrayList<>();
+    private final List<UUID> editMode = new ArrayList<>();
 
     private final HashMap<UUID, Location> firstClicks = new HashMap<>();
 
